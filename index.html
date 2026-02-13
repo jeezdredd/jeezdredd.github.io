@@ -2,9 +2,378 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sevastyan Che — Backend Developer</title>
+    <meta name="description" content="Backend Developer specializing in Python, Django, and scalable systems. Based in Almaty, Kazakhstan.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
+<nav class="nav" id="nav">
+    <div class="nav-inner">
+        <a href="#hero" class="nav-logo">S.C</a>
+        <div class="nav-links">
+            <a href="#about">About</a>
+            <a href="#experience">Experience</a>
+            <a href="#projects">Projects</a>
+            <a href="#skills">Skills</a>
+            <a href="#education">Education</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+        </button>
+    </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+    <a href="#about">About</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
+    <a href="#education">Education</a>
+    <a href="#contact">Contact</a>
+</div>
+
+<section class="hero" id="hero">
+    <canvas class="hero-canvas" id="heroCanvas"></canvas>
+    <div class="hero-content">
+        <div class="hero-label anim-fade" data-delay="0">backend developer</div>
+        <h1 class="hero-name anim-fade" data-delay="200">
+            <span class="hero-name-line">Sevastyan</span>
+            <span class="hero-name-line hero-name-italic">Che</span>
+        </h1>
+        <div class="hero-typed-wrap anim-fade" data-delay="400">
+            <span class="hero-typed-prefix">&gt;&nbsp;</span>
+            <span class="hero-typed" id="heroTyped"></span>
+            <span class="hero-cursor">|</span>
+        </div>
+        <div class="hero-scroll anim-fade" data-delay="800">
+            <div class="hero-scroll-line"></div>
+            <span>scroll</span>
+        </div>
+    </div>
+</section>
+
+<section class="section about" id="about">
+    <div class="container">
+        <div class="section-grid">
+            <div class="section-label anim-reveal">
+                <span class="section-number">01</span>
+                <span>About</span>
+            </div>
+            <div class="about-content">
+                <p class="about-lead anim-reveal">
+                    Backend developer based in <strong>Almaty, Kazakhstan</strong>, currently building logistics platforms at <strong>Floship</strong>.
+                </p>
+                <p class="about-text anim-reveal">
+                    Passionate about Python, Django, and designing scalable backend architectures. Pursuing a BASc in Computer Science at De Montfort University with First Class Honours. Over 200 custom bot solutions delivered through freelance work, with experience spanning from NLP systems to real-time web applications.
+                </p>
+                <div class="about-stats anim-reveal">
+                    <div class="stat">
+                        <span class="stat-number">3+</span>
+                        <span class="stat-label">Years of Experience</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">200+</span>
+                        <span class="stat-label">Bots Delivered</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">5+</span>
+                        <span class="stat-label">Major Projects</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section experience" id="experience">
+    <div class="container">
+        <div class="section-grid">
+            <div class="section-label anim-reveal">
+                <span class="section-number">02</span>
+                <span>Experience</span>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item anim-reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">May 2025 — Present</div>
+                    <h3 class="timeline-role">Junior Python Developer</h3>
+                    <div class="timeline-company">Floship <span class="timeline-location">Hong Kong · Remote</span></div>
+                    <p class="timeline-desc">Backend development for a global e-commerce fulfillment platform. Building features for internal Finance and Shipping portal. Leading migration of the Billing module from Django Admin to REST API architecture. Query optimization and billing workflow support.</p>
+                    <div class="timeline-tags">
+                        <span>Python</span><span>Django</span><span>DRF</span><span>PostgreSQL</span><span>Celery</span><span>Docker</span>
+                    </div>
+                </div>
+
+                <div class="timeline-item anim-reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">Feb 2021 — Mar 2025</div>
+                    <h3 class="timeline-role">NLP Bot Developer</h3>
+                    <div class="timeline-company">Fiverr <span class="timeline-location">Freelance · Remote</span></div>
+                    <p class="timeline-desc">Delivered 200+ custom AI bot solutions across various industries. Specialized in conversational AI, NLP implementation, ML framework integration, custom API development, and deployment of scalable AI solutions.</p>
+                    <div class="timeline-tags">
+                        <span>Python</span><span>NLP</span><span>TensorFlow</span><span>PyTorch</span><span>Docker</span>
+                    </div>
+                </div>
+
+                <div class="timeline-item anim-reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">Jun — Aug 2024</div>
+                    <h3 class="timeline-role">Web Developer</h3>
+                    <div class="timeline-company">Medico In-Tech Kazakhstan <span class="timeline-location">Almaty · Hybrid</span></div>
+                    <p class="timeline-desc">Summer internship focused on website maintenance, data updates, and development of new functionality for a medical technology company.</p>
+                    <div class="timeline-tags">
+                        <span>HTML</span><span>CSS</span><span>JavaScript</span>
+                    </div>
+                </div>
+
+                <div class="timeline-item anim-reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">Jan — Apr 2024</div>
+                    <h3 class="timeline-role">Junior Web Developer</h3>
+                    <div class="timeline-company">Canadian Web Services <span class="timeline-location">Ontario, Canada · On-site</span></div>
+                    <p class="timeline-desc">Assisted senior developers with website maintenance, bug fixing, UI improvements, and feature enhancements. Code reviews and performance optimization with cross-browser compatibility.</p>
+                    <div class="timeline-tags">
+                        <span>HTML</span><span>CSS</span><span>JavaScript</span>
+                    </div>
+                </div>
+
+                <div class="timeline-item anim-reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">Sep — Dec 2022</div>
+                    <h3 class="timeline-role">Search Engine Evaluator</h3>
+                    <div class="timeline-company">TELUS International <span class="timeline-location">Toronto · Remote</span></div>
+                    <p class="timeline-desc">Analyzed and rated search engine results for accuracy and relevance. Evaluated web content against quality guidelines, specializing in user intent alignment and SERP optimization.</p>
+                    <div class="timeline-tags">
+                        <span>Data Analysis</span><span>SEO</span><span>Quality Evaluation</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section projects" id="projects">
+    <div class="container">
+        <div class="section-grid">
+            <div class="section-label anim-reveal">
+                <span class="section-number">03</span>
+                <span>Projects</span>
+            </div>
+            <div class="projects-grid">
+                <a href="https://www.floship.com" target="_blank" rel="noopener" class="project-card anim-reveal">
+                    <div class="project-card-inner">
+                        <div class="project-index">01</div>
+                        <h3 class="project-title">Floship Global eCommerce Platform <span class="project-link-icon">&nearr;</span></h3>
+                        <p class="project-desc">Revolutionizing global fulfillment with cutting-edge eCommerce logistics solutions, a 360-degree circular supply chain network, and industry-leading technology.</p>
+                        <div class="project-tags">
+                            <span>Python</span><span>PostgreSQL</span><span>DRF</span><span>Docker</span><span>Celery</span><span>RabbitMQ</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://github.com/jeezdredd/tandem-octo" target="_blank" rel="noopener" class="project-card anim-reveal">
+                    <div class="project-card-inner">
+                        <div class="project-index">02</div>
+                        <h3 class="project-title">Tandem <span class="project-link-icon">&nearr;</span></h3>
+                        <p class="project-desc">Real-time synchronized video watching platform for remote movie sessions. When one person plays, pauses, or seeks — everyone experiences it simultaneously.</p>
+                        <div class="project-tags">
+                            <span>Django ASGI</span><span>Daphne</span><span>React</span><span>PostgreSQL</span><span>Redis</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://github.com/jeezdredd/social-media-platform" target="_blank" rel="noopener" class="project-card anim-reveal">
+                    <div class="project-card-inner">
+                        <div class="project-index">03</div>
+                        <h3 class="project-title">Social Media Platform <span class="project-link-icon">&nearr;</span></h3>
+                        <p class="project-desc">A feature-rich Twitter-like social platform with real-time chat, posts, comments, likes, and moderation capabilities.</p>
+                        <div class="project-tags">
+                            <span>PHP</span><span>JavaScript</span><span>MySQL</span><span>WebSockets</span>
+                        </div>
+                    </div>
+                </a>
+
+                <a href="https://github.com/jeezdredd/p2p" target="_blank" rel="noopener" class="project-card anim-reveal">
+                    <div class="project-card-inner">
+                        <div class="project-index">04</div>
+                        <h3 class="project-title">P2P Learning Platform <span class="project-link-icon">&nearr;</span></h3>
+                        <p class="project-desc">Collaborative academic platform where students share resources, schedule peer tutoring sessions, and participate in subject-wise discussions.</p>
+                        <div class="project-tags">
+                            <span>Django</span><span>React</span><span>TypeScript</span><span>PostgreSQL</span><span>Redis</span><span>Docker</span>
+                        </div>
+                    </div>
+                </a>
+
+                <article class="project-card anim-reveal">
+                    <div class="project-card-inner">
+                        <div class="project-index">05</div>
+                        <h3 class="project-title">Government of Canada Website</h3>
+                        <p class="project-desc">Canada's primary digital hub providing a single point of access to all federal services — immigration, taxes, social benefits, and job opportunities.</p>
+                        <div class="project-tags">
+                            <span>HTML</span><span>CSS</span><span>JavaScript</span><span>Databases</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section skills" id="skills">
+    <div class="container">
+        <div class="section-grid">
+            <div class="section-label anim-reveal">
+                <span class="section-number">04</span>
+                <span>Skills</span>
+            </div>
+            <div class="skills-content">
+                <div class="skill-group anim-reveal">
+                    <h3 class="skill-group-title">Backend</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">Django</span>
+                        <span class="skill-tag">DRF</span>
+                        <span class="skill-tag">Flask</span>
+                        <span class="skill-tag">Celery</span>
+                        <span class="skill-tag">RabbitMQ</span>
+                    </div>
+                </div>
+                <div class="skill-group anim-reveal">
+                    <h3 class="skill-group-title">Databases</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">PostgreSQL</span>
+                        <span class="skill-tag">SQLite</span>
+                        <span class="skill-tag">Redis</span>
+                        <span class="skill-tag">SQLAlchemy</span>
+                    </div>
+                </div>
+                <div class="skill-group anim-reveal">
+                    <h3 class="skill-group-title">Frontend</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">React</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">TypeScript</span>
+                        <span class="skill-tag">HTML</span>
+                        <span class="skill-tag">CSS</span>
+                    </div>
+                </div>
+                <div class="skill-group anim-reveal">
+                    <h3 class="skill-group-title">AI / ML</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">NLP</span>
+                        <span class="skill-tag">TensorFlow</span>
+                        <span class="skill-tag">PyTorch</span>
+                    </div>
+                </div>
+                <div class="skill-group anim-reveal">
+                    <h3 class="skill-group-title">DevOps</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Docker</span>
+                        <span class="skill-tag">Git</span>
+                    </div>
+                </div>
+                <div class="skill-group anim-reveal">
+                    <h3 class="skill-group-title">Other</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">REST API</span>
+                        <span class="skill-tag">WebSockets</span>
+                        <span class="skill-tag">Numpy</span>
+                        <span class="skill-tag">Pandas</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section education" id="education">
+    <div class="container">
+        <div class="section-grid">
+            <div class="section-label anim-reveal">
+                <span class="section-number">05</span>
+                <span>Education</span>
+            </div>
+            <div class="education-content">
+                <div class="edu-item anim-reveal">
+                    <div class="edu-period">2023 — 2026</div>
+                    <h3 class="edu-school">De Montfort University</h3>
+                    <div class="edu-degree">Bachelor of Applied Science — Computer Science</div>
+                    <div class="edu-detail">First Class Honours · GPA &gt;70%</div>
+                    <div class="edu-activities">CS Representative · Careers Club IT Representative · Student Council · DMUK Tech Club</div>
+                </div>
+                <div class="edu-item anim-reveal">
+                    <div class="edu-period">2022 — 2023</div>
+                    <h3 class="edu-school">Seneca Polytechnic</h3>
+                    <div class="edu-degree">Honours Bachelor of Technology — Software Development</div>
+                    <div class="edu-detail">GPA 3.21</div>
+                </div>
+
+                <div class="certs anim-reveal">
+                    <h3 class="certs-title">Certifications</h3>
+                    <div class="cert-item">
+                        <span class="cert-name">Python Developer</span>
+                        <span class="cert-issuer">Skillbox · Feb 2026</span>
+                    </div>
+                    <div class="cert-item">
+                        <span class="cert-name">Cybersecurity Foundation</span>
+                        <span class="cert-issuer">Palo Alto Networks · Jun 2024</span>
+                    </div>
+                    <div class="cert-item">
+                        <span class="cert-name">MYP eAssessment Certificate</span>
+                        <span class="cert-issuer">International Baccalaureate · Aug 2021</span>
+                    </div>
+                    <div class="cert-item">
+                        <span class="cert-name">MYP Programme Graduate</span>
+                        <span class="cert-issuer">International Baccalaureate · Aug 2021</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section contact" id="contact">
+    <div class="container">
+        <div class="contact-inner">
+            <div class="contact-label anim-reveal">Let's connect</div>
+            <h2 class="contact-heading anim-reveal">
+                <span class="contact-heading-line">Have a project</span>
+                <span class="contact-heading-line contact-heading-italic">in mind?</span>
+            </h2>
+            <div class="contact-links anim-reveal">
+                <a href="https://github.com/jeezdredd" target="_blank" rel="noopener" class="contact-link" id="githubLink">
+                    <span class="contact-link-label">GitHub</span>
+                    <span class="contact-link-arrow">&rarr;</span>
+                </a>
+                <a href="https://www.linkedin.com/in/sevastyan-che/" target="_blank" rel="noopener" class="contact-link" id="linkedinLink">
+                    <span class="contact-link-label">LinkedIn</span>
+                    <span class="contact-link-arrow">&rarr;</span>
+                </a>
+                <a href="mailto:chesebastian01@gmail.com" class="contact-link" id="emailLink">
+                    <span class="contact-link-label">Email</span>
+                    <span class="contact-link-arrow">&rarr;</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-inner">
+            <span class="footer-name">Sevastyan Che</span>
+            <span class="footer-year">2026</span>
+        </div>
+    </div>
+</footer>
+
+<script src="script.js"></script>
 </body>
 </html>
