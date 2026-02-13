@@ -1,4 +1,123 @@
 (function () {
+    var loader = document.getElementById('loader');
+    var loaderBody = document.getElementById('loaderBody');
+
+    var loaderLines = [
+        { text: 'BIOS v3.14', delay: 0 },
+        { text: 'Booting...', delay: 400 },
+        { text: 'Memory: 16384 MB <span class="ok">OK</span>', delay: 500 },
+        { text: 'Loading kernel <span class="ok">OK</span>', delay: 500 },
+        { text: '', delay: 200 },
+        { text: '<span class="accent">$</span> init portfolio', delay: 300 },
+        { text: '<span class="green">&#10003;</span> modules loaded', delay: 250 },
+        { text: '<span class="green">&#10003;</span> db connected', delay: 250 },
+        { text: '<span class="green">&#10003;</span> data fetched', delay: 250 },
+        { text: '<span class="green">&#10003;</span> UI rendered', delay: 250 },
+        { text: '', delay: 150 },
+        { text: '<span class="accent">$</span> <span class="ok">ready</span>', delay: 300 },
+    ];
+
+    function parseTokens(html) {
+        var tokens = [];
+        var i = 0;
+        while (i < html.length) {
+            if (html[i] === '<') {
+                var close = html.indexOf('>', i);
+                tokens.push({ type: 'tag', value: html.substring(i, close + 1) });
+                i = close + 1;
+            } else if (html[i] === '&') {
+                var semi = html.indexOf(';', i);
+                tokens.push({ type: 'char', value: html.substring(i, semi + 1) });
+                i = semi + 1;
+            } else {
+                tokens.push({ type: 'char', value: html[i] });
+                i++;
+            }
+        }
+        return tokens;
+    }
+
+    function typeLine(div, html, speed, callback) {
+        var tmp = document.createElement('div');
+        tmp.innerHTML = html;
+        var plainText = tmp.textContent;
+
+        if (!plainText.length) {
+            div.innerHTML = '&nbsp;';
+            if (callback) callback();
+            return;
+        }
+
+        var tokens = parseTokens(html);
+        var charCount = tokens.filter(function (t) { return t.type === 'char'; }).length;
+        var shown = 0;
+
+        function buildHtml(count) {
+            var result = '';
+            var visible = 0;
+            var openTags = [];
+            for (var j = 0; j < tokens.length && visible < count; j++) {
+                if (tokens[j].type === 'tag') {
+                    result += tokens[j].value;
+                    if (tokens[j].value[1] === '/') {
+                        openTags.pop();
+                    } else {
+                        openTags.push(tokens[j].value.match(/^<([a-z]+)/i)[1]);
+                    }
+                } else {
+                    result += tokens[j].value;
+                    visible++;
+                }
+            }
+            for (var k = openTags.length - 1; k >= 0; k--) {
+                result += '</' + openTags[k] + '>';
+            }
+            return result;
+        }
+
+        function step() {
+            shown++;
+            div.innerHTML = buildHtml(shown) + '<span class="loader-caret">&#9608;</span>';
+            if (shown < charCount) {
+                setTimeout(step, speed);
+            } else {
+                div.innerHTML = buildHtml(shown);
+                if (callback) callback();
+            }
+        }
+        step();
+    }
+
+    var totalTime = 0;
+    loaderLines.forEach(function (l) { totalTime += l.delay; });
+
+    function runLoader(index) {
+        if (index >= loaderLines.length) {
+            setTimeout(function () {
+                loader.classList.add('hidden');
+                document.body.style.overflow = '';
+            }, 500);
+            return;
+        }
+        var line = loaderLines[index];
+        setTimeout(function () {
+            var div = document.createElement('div');
+            div.className = 'loader-line';
+            div.style.opacity = '1';
+            div.style.transform = 'none';
+            div.style.animation = 'none';
+            loaderBody.appendChild(div);
+            loaderBody.scrollTop = loaderBody.scrollHeight;
+            typeLine(div, line.text, 30, function () {
+                runLoader(index + 1);
+            });
+        }, line.delay);
+    }
+
+    runLoader(0);
+
+    document.body.style.overflow = 'hidden';
+
     const nav = document.getElementById('nav');
     const navToggle = document.getElementById('navToggle');
     const mobileMenu = document.getElementById('mobileMenu');
