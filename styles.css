@@ -600,11 +600,11 @@ a.project-card {
 }
 
 .project-link-icon {
-    font-style: normal;
-    font-size: 16px;
     color: var(--text-dim);
     transition: color 0.3s ease, transform 0.3s var(--ease);
     display: inline-block;
+    vertical-align: middle;
+    margin-left: 6px;
 }
 
 .project-card:hover .project-link-icon {
@@ -973,6 +973,21 @@ a.project-card {
         font-size: 13px;
     }
 
+    .loader-terminal {
+        width: 92vw;
+        max-width: none;
+    }
+
+    .loader-body {
+        padding: 16px 12px;
+        font-size: 11px;
+        min-height: 120px;
+    }
+
+    .loader-header {
+        padding: 10px 12px;
+    }
+
     .nav-links {
         display: none;
     }
@@ -989,12 +1004,51 @@ a.project-card {
         display: none;
     }
 
-    .section {
-        padding: 80px 0;
+    .hero {
+        min-height: 100svh;
+    }
+
+    .hero-label {
+        font-size: 10px;
+        letter-spacing: 3px;
+        margin-bottom: 24px;
+    }
+
+    .hero-name {
+        margin-bottom: 28px;
     }
 
     .hero-name-line {
         letter-spacing: -1px;
+    }
+
+    .hero-typed-wrap {
+        font-size: 12px;
+    }
+
+    .hero-scroll {
+        bottom: -80px;
+    }
+
+    .section {
+        padding: 80px 0;
+    }
+
+    .container {
+        padding: 0 16px;
+    }
+
+    .about-lead {
+        font-size: 22px;
+    }
+
+    .about-stats {
+        flex-direction: column;
+        gap: 24px;
+    }
+
+    .stat-number {
+        font-size: 28px;
     }
 
     .timeline {
@@ -1005,18 +1059,35 @@ a.project-card {
         left: -28px;
     }
 
+    .timeline-role {
+        font-size: 20px;
+    }
+
+    .timeline-desc {
+        font-size: 12px;
+    }
+
     .skills-content {
         grid-template-columns: 1fr;
         gap: 28px;
     }
 
-    .about-stats {
-        flex-direction: column;
-        gap: 24px;
+    .skill-tag {
+        font-size: 11px;
+        padding: 6px 12px;
+    }
+
+    .edu-school {
+        font-size: 20px;
     }
 
     .contact {
-        padding: 100px 0;
+        padding: 80px 0;
+    }
+
+    .contact-heading-line {
+        font-size: 36px;
+        letter-spacing: -1px;
     }
 
     .contact-links {
@@ -1036,7 +1107,15 @@ a.project-card {
     }
 
     .project-card-inner {
-        padding: 24px;
+        padding: 20px;
+    }
+
+    .project-title {
+        font-size: 18px;
+    }
+
+    .project-desc {
+        font-size: 12px;
     }
 
     .project-card:hover {
@@ -1045,5 +1124,27 @@ a.project-card {
 
     .skill-tag:hover {
         transform: none;
+    }
+
+    .contact-link:hover {
+        transform: none;
+    }
+}
+
+@media (max-width: 380px) {
+    .hero-name-line {
+        font-size: 48px;
+    }
+
+    .about-lead {
+        font-size: 20px;
+    }
+
+    .contact-heading-line {
+        font-size: 28px;
+    }
+
+    .timeline-role {
+        font-size: 18px;
     }
 }

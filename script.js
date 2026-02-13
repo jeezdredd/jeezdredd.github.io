@@ -94,8 +94,12 @@
     function runLoader(index) {
         if (index >= loaderLines.length) {
             setTimeout(function () {
-                loader.classList.add('hidden');
+                loader.style.transition = 'opacity 0.5s ease';
+                loader.style.opacity = '0';
                 document.body.style.overflow = '';
+                setTimeout(function () {
+                    loader.parentNode.removeChild(loader);
+                }, 500);
             }, 500);
             return;
         }
