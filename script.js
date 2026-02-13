@@ -136,10 +136,22 @@
 
     var typedEl = document.getElementById('heroTyped');
     var phrases = [
-        'building scalable backend systems',
-        'Python & Django enthusiast',
-        'turning ideas into APIs',
-        'based in Almaty, Kazakhstan'
+        'coffee in, clean code out',
+        'if it works — ship it, then refactor',
+        'automating things since 2021',
+        'currently debugging something, probably',
+        'git commit -m "fixed it for real this time"',
+        'one more migration won\'t hurt... right?',
+        'sleeping is just offline debugging',
+        'ctrl+c ctrl+v is a valid design pattern',
+        'it worked on my machine, I swear',
+        'TODO: refactor this later (written 2 years ago)',
+        '200 OK is my favorite status code',
+        'there are only 2 hard problems: cache invalidation',
+        'pip install solution-to-all-problems',
+        'my code doesn\'t have bugs, only surprise features',
+        'deployed on Friday, pray on Saturday',
+        'SELECT * FROM sleep WHERE hours > 6 — 0 rows returned'
     ];
     var phraseIndex = 0;
     var charIndex = 0;
