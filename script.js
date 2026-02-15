@@ -232,6 +232,8 @@
     });
 
     var lastScroll = 0;
+    var backToTop = document.getElementById('backToTop');
+
     window.addEventListener('scroll', function () {
         var scrollY = window.scrollY;
         if (scrollY > 50) {
@@ -239,8 +241,21 @@
         } else {
             nav.classList.remove('scrolled');
         }
+        if (backToTop) {
+            if (scrollY > 600) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        }
         lastScroll = scrollY;
     });
+
+    if (backToTop) {
+        backToTop.addEventListener('click', function () {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
 
     navToggle.addEventListener('click', function () {
         navToggle.classList.toggle('active');
