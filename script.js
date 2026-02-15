@@ -105,6 +105,7 @@
                 setTimeout(function () {
                     loader.parentNode.removeChild(loader);
                     sessionStorage.setItem('loaderSeen', '1');
+                    document.dispatchEvent(new Event('loaderDone'));
                 }, 500);
             }, 500);
             return;
@@ -282,7 +283,7 @@
     var typedEl = document.getElementById('heroTyped');
     var phrases = [
         'coffee in, clean code out',
-        'if it works — ship it, then refactor',
+        'if it works, ship it, then refactor',
         'automating things since 2021',
         'currently debugging something, probably',
         'git commit -m "fixed it for real this time"',
@@ -296,7 +297,17 @@
         'pip install solution-to-all-problems',
         'my code doesn\'t have bugs, only surprise features',
         'deployed on Friday, pray on Saturday',
-        'SELECT * FROM sleep WHERE hours > 6 — 0 rows returned'
+        'SELECT * FROM sleep WHERE hours > 6 // 0 rows returned',
+        'shipping code & reviewing PRs',
+        'rm -rf node_modules && pretend nothing happened',
+        'googling stack overflow professionally',
+        'pretending to understand regex',
+        'counting sheep in O(n) time',
+        'dreaming in Python',
+        '404 developer not found',
+        'async sleep in progress',
+        'segfault in dreamland',
+        'gone to /dev/null, brb'
     ];
     var phraseIndex = 0;
     var charIndex = 0;
@@ -578,43 +589,8 @@
     var labelEl = document.getElementById('statusLabel');
     if (!dayNightEl || !timeEl) return;
 
-    var onlinePhrases = [
-        'Online — shipping code',
-        'Online — debugging life',
-        'Online — pushing to prod',
-        'Online — reviewing PRs',
-        'Online — refactoring again',
-        'Online — drinking coffee & coding',
-        'Online — rm -rf node_modules',
-        'Online — googling stack overflow',
-        'Online — pretending to understand regex',
-        'Online — git commit -m "fix"'
-    ];
-
-    var sleepPhrases = [
-        'AFK — counting sheep',
-        'AFK — dreaming in Python',
-        'AFK — 404 developer not found',
-        'AFK — charging batteries',
-        'AFK — sleep(28800)',
-        'AFK — gone to /dev/null',
-        'AFK — segfault in dreamland',
-        'AFK — brb after reboot',
-        'AFK — async sleep in progress',
-        'AFK — do not disturb (or do, idc)'
-    ];
-
     var sunSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
     var moonSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
-
-    var currentPhrase = '';
-
-    function pick(arr) {
-        var p = arr[Math.floor(Math.random() * arr.length)];
-        if (p === currentPhrase && arr.length > 1) return pick(arr);
-        currentPhrase = p;
-        return p;
-    }
 
     function updateAlmatyTime() {
         var now = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Almaty' }));
@@ -628,10 +604,10 @@
 
         if (isAwake) {
             statusEl.classList.remove('sleeping');
-            labelEl.textContent = pick(onlinePhrases);
+            labelEl.textContent = 'Online';
         } else {
             statusEl.classList.add('sleeping');
-            labelEl.textContent = pick(sleepPhrases);
+            labelEl.textContent = 'AFK';
         }
     }
 
@@ -666,8 +642,30 @@
 
     var audio = new Audio('ambient.mp3');
     audio.loop = true;
-    audio.volume = 0.3;
+    audio.volume = 0.15;
     var playing = false;
+
+    function startMusic() {
+        audio.play().then(function () {
+            playing = true;
+            player.classList.add('playing');
+        }).catch(function () {
+            document.addEventListener('click', function once() {
+                audio.play().then(function () {
+                    playing = true;
+                    player.classList.add('playing');
+                }).catch(function () {});
+                document.removeEventListener('click', once);
+            });
+        });
+    }
+
+    var loaderSeen = sessionStorage.getItem('loaderSeen');
+    if (loaderSeen) {
+        startMusic();
+    } else {
+        document.addEventListener('loaderDone', startMusic);
+    }
 
     btn.addEventListener('click', function () {
         if (playing) {
@@ -679,5 +677,84 @@
         }
         playing = !playing;
     });
+})();
+
+(function () {
+    var canvas = document.getElementById('easterEgg');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var sequence = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
+    var pos = 0;
+    var active = false;
+    var drops = [];
+    var cols;
+    var animId;
+
+    document.addEventListener('keydown', function (e) {
+        if (active) return;
+        if (e.keyCode === sequence[pos]) {
+            pos++;
+            if (pos === sequence.length) {
+                pos = 0;
+                startMatrix();
+            }
+        } else {
+            pos = 0;
+        }
+    });
+
+    function startMatrix() {
+        active = true;
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        canvas.classList.add('active');
+        canvas.style.pointerEvents = 'auto';
+
+        cols = Math.floor(canvas.width / 16);
+        drops = [];
+        for (var i = 0; i < cols; i++) {
+            drops[i] = Math.random() * -100;
+        }
+
+        var chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789';
+        var frame = 0;
+
+        function draw() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#7c3aed';
+            ctx.font = '14px monospace';
+
+            for (var i = 0; i < drops.length; i++) {
+                var ch = chars[Math.floor(Math.random() * chars.length)];
+                ctx.fillText(ch, i * 16, drops[i] * 16);
+                if (drops[i] * 16 > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+
+            frame++;
+            if (frame < 300) {
+                animId = requestAnimationFrame(draw);
+            } else {
+                canvas.classList.remove('active');
+                canvas.style.pointerEvents = 'none';
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                active = false;
+            }
+        }
+
+        draw();
+
+        canvas.addEventListener('click', function once() {
+            cancelAnimationFrame(animId);
+            canvas.classList.remove('active');
+            canvas.style.pointerEvents = 'none';
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            active = false;
+            canvas.removeEventListener('click', once);
+        });
+    }
 })();
 

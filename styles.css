@@ -1101,6 +1101,22 @@ a.project-card {
     color: var(--accent);
 }
 
+.easter-egg-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99999;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.easter-egg-overlay.active {
+    opacity: 1;
+}
+
 .footer {
     padding: 32px 0;
     border-top: 1px solid var(--border);
@@ -1271,18 +1287,30 @@ button.contact-link {
 
 .marquee-track {
     display: flex;
-    gap: 24px;
+    gap: 0;
     width: max-content;
-    animation: marqueeScroll 30s linear infinite;
+    animation: marqueeScroll 40s linear infinite;
 }
 
-.marquee-track span {
+.marquee-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     font-family: var(--font-mono);
     font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
     color: var(--text-muted);
     white-space: nowrap;
+    padding: 0 16px;
+}
+
+.marquee-item img {
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
+}
+
+.marquee-item:hover img {
+    opacity: 1;
 }
 
 @keyframes marqueeScroll {
@@ -1668,9 +1696,14 @@ button.contact-link {
         padding: 6px 10px;
     }
 
-    .marquee-track span {
+    .marquee-item {
         font-size: 10px;
-        letter-spacing: 1px;
+        padding: 0 12px;
+    }
+
+    .marquee-item img {
+        width: 16px;
+        height: 16px;
     }
 
 
