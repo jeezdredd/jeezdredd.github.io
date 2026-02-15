@@ -18,7 +18,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=3">
 </head>
 <body>
 
@@ -45,6 +45,10 @@
             <a href="#education">Education</a>
             <a href="#contact">Contact</a>
         </div>
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+            <svg class="theme-icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+            <svg class="theme-icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
         <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
             <span></span>
             <span></span>
@@ -64,10 +68,17 @@
 <section class="hero" id="hero">
     <canvas class="hero-canvas" id="heroCanvas"></canvas>
     <div class="hero-content">
+        <div class="hero-status anim-fade" data-delay="0">
+            <span class="status-daynight" id="statusDayNight"></span>
+            <span class="status-time" id="statusTime"></span>
+            <span class="status-sep">/</span>
+            <span class="status-dot"></span>
+            <span class="status-label" id="statusLabel">Available for hire</span>
+        </div>
         <div class="hero-label anim-fade" data-delay="0">backend developer</div>
         <h1 class="hero-name anim-fade" data-delay="200">
-            <span class="hero-name-line">Sevastyan</span>
-            <span class="hero-name-line hero-name-italic">Che</span>
+            <span class="hero-name-line hero-glitch" data-text="Sevastyan">Sevastyan</span>
+            <span class="hero-name-line hero-name-italic hero-glitch" data-text="Che">Che</span>
         </h1>
         <div class="hero-typed-wrap anim-fade" data-delay="400">
             <span class="hero-typed-prefix">&gt;&nbsp;</span>
@@ -87,6 +98,43 @@
         <span>scroll</span>
     </div>
 </section>
+
+<div class="marquee">
+    <div class="marquee-track">
+        <span>Python</span><span>&middot;</span>
+        <span>Django</span><span>&middot;</span>
+        <span>REST API</span><span>&middot;</span>
+        <span>PostgreSQL</span><span>&middot;</span>
+        <span>Redis</span><span>&middot;</span>
+        <span>Docker</span><span>&middot;</span>
+        <span>Celery</span><span>&middot;</span>
+        <span>React</span><span>&middot;</span>
+        <span>TypeScript</span><span>&middot;</span>
+        <span>NLP</span><span>&middot;</span>
+        <span>TensorFlow</span><span>&middot;</span>
+        <span>WebSockets</span><span>&middot;</span>
+        <span>Flask</span><span>&middot;</span>
+        <span>RabbitMQ</span><span>&middot;</span>
+        <span>Git</span><span>&middot;</span>
+        <span>PyTorch</span><span>&middot;</span>
+        <span>Python</span><span>&middot;</span>
+        <span>Django</span><span>&middot;</span>
+        <span>REST API</span><span>&middot;</span>
+        <span>PostgreSQL</span><span>&middot;</span>
+        <span>Redis</span><span>&middot;</span>
+        <span>Docker</span><span>&middot;</span>
+        <span>Celery</span><span>&middot;</span>
+        <span>React</span><span>&middot;</span>
+        <span>TypeScript</span><span>&middot;</span>
+        <span>NLP</span><span>&middot;</span>
+        <span>TensorFlow</span><span>&middot;</span>
+        <span>WebSockets</span><span>&middot;</span>
+        <span>Flask</span><span>&middot;</span>
+        <span>RabbitMQ</span><span>&middot;</span>
+        <span>Git</span><span>&middot;</span>
+        <span>PyTorch</span><span>&middot;</span>
+    </div>
+</div>
 
 <section class="section about" id="about">
     <div class="container">
@@ -420,6 +468,16 @@
     </div>
 </footer>
 
+<div class="music-player" id="musicPlayer">
+    <button class="music-btn" id="musicBtn" aria-label="Toggle music">
+        <svg class="music-icon-play" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        <svg class="music-icon-pause" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+    </button>
+    <div class="music-bars" id="musicBars">
+        <span></span><span></span><span></span><span></span>
+    </div>
+</div>
+
 <div class="qr-modal" id="qrModal">
     <div class="qr-modal-backdrop" id="qrBackdrop"></div>
     <div class="qr-modal-content">
@@ -437,6 +495,6 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
-<script src="script.js"></script>
+<script src="script.js?v=3"></script>
 </body>
 </html>

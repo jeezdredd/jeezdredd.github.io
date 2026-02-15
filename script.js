@@ -570,3 +570,114 @@
 
     sendVisitorLog();
 })();
+
+(function () {
+    var statusEl = document.querySelector('.hero-status');
+    var dayNightEl = document.getElementById('statusDayNight');
+    var timeEl = document.getElementById('statusTime');
+    var labelEl = document.getElementById('statusLabel');
+    if (!dayNightEl || !timeEl) return;
+
+    var onlinePhrases = [
+        'Online — shipping code',
+        'Online — debugging life',
+        'Online — pushing to prod',
+        'Online — reviewing PRs',
+        'Online — refactoring again',
+        'Online — drinking coffee & coding',
+        'Online — rm -rf node_modules',
+        'Online — googling stack overflow',
+        'Online — pretending to understand regex',
+        'Online — git commit -m "fix"'
+    ];
+
+    var sleepPhrases = [
+        'AFK — counting sheep',
+        'AFK — dreaming in Python',
+        'AFK — 404 developer not found',
+        'AFK — charging batteries',
+        'AFK — sleep(28800)',
+        'AFK — gone to /dev/null',
+        'AFK — segfault in dreamland',
+        'AFK — brb after reboot',
+        'AFK — async sleep in progress',
+        'AFK — do not disturb (or do, idc)'
+    ];
+
+    var sunSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>';
+    var moonSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+
+    var currentPhrase = '';
+
+    function pick(arr) {
+        var p = arr[Math.floor(Math.random() * arr.length)];
+        if (p === currentPhrase && arr.length > 1) return pick(arr);
+        currentPhrase = p;
+        return p;
+    }
+
+    function updateAlmatyTime() {
+        var now = new Date(new Date().toLocaleString('en-US', { timeZone: 'Asia/Almaty' }));
+        var h = now.getHours();
+        var m = now.getMinutes();
+        var timeStr = (h < 10 ? '0' : '') + h + ':' + (m < 10 ? '0' : '') + m;
+        var isAwake = h >= 8;
+
+        timeEl.textContent = timeStr + ' GMT+5';
+        dayNightEl.innerHTML = isAwake ? sunSvg : moonSvg;
+
+        if (isAwake) {
+            statusEl.classList.remove('sleeping');
+            labelEl.textContent = pick(onlinePhrases);
+        } else {
+            statusEl.classList.add('sleeping');
+            labelEl.textContent = pick(sleepPhrases);
+        }
+    }
+
+    updateAlmatyTime();
+    setInterval(updateAlmatyTime, 30000);
+})();
+
+(function () {
+    var toggle = document.getElementById('themeToggle');
+    var saved = localStorage.getItem('theme');
+    if (saved === 'light') {
+        document.documentElement.setAttribute('data-theme', 'light');
+    }
+    if (toggle) {
+        toggle.addEventListener('click', function () {
+            var current = document.documentElement.getAttribute('data-theme');
+            var next = current === 'light' ? 'dark' : 'light';
+            if (next === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+            localStorage.setItem('theme', next);
+        });
+    }
+})();
+
+(function () {
+    var player = document.getElementById('musicPlayer');
+    var btn = document.getElementById('musicBtn');
+    if (!btn || !player) return;
+
+    var audio = new Audio('ambient.mp3');
+    audio.loop = true;
+    audio.volume = 0.3;
+    var playing = false;
+
+    btn.addEventListener('click', function () {
+        if (playing) {
+            audio.pause();
+            player.classList.remove('playing');
+        } else {
+            audio.play().catch(function () {});
+            player.classList.add('playing');
+        }
+        playing = !playing;
+    });
+})();
+
