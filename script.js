@@ -1,6 +1,11 @@
 (function () {
     var loader = document.getElementById('loader');
     var loaderBody = document.getElementById('loaderBody');
+    var loaderSeen = sessionStorage.getItem('loaderSeen');
+
+    if (loaderSeen && loader) {
+        loader.parentNode.removeChild(loader);
+    }
 
     var loaderLines = [
         { text: 'BIOS v3.14', delay: 0 },
@@ -99,6 +104,7 @@
                 document.body.style.overflow = '';
                 setTimeout(function () {
                     loader.parentNode.removeChild(loader);
+                    sessionStorage.setItem('loaderSeen', '1');
                 }, 500);
             }, 500);
             return;
@@ -118,9 +124,10 @@
         }, line.delay);
     }
 
-    runLoader(0);
-
-    document.body.style.overflow = 'hidden';
+    if (!loaderSeen && loader) {
+        runLoader(0);
+        document.body.style.overflow = 'hidden';
+    }
 
     const nav = document.getElementById('nav');
     const navToggle = document.getElementById('navToggle');
@@ -359,4 +366,182 @@
     }, { threshold: 0 });
 
     heroObserver.observe(heroSection);
+
+    var qrModal = document.getElementById('qrModal');
+    var qrBackdrop = document.getElementById('qrBackdrop');
+    var qrClose = document.getElementById('qrClose');
+    var qrCodeEl = document.getElementById('qrCode');
+    var qrLoading = document.getElementById('qrLoading');
+    var qrLoadingText = document.getElementById('qrLoadingText');
+    var qrHint = document.getElementById('qrHint');
+    var telegramBtn = document.getElementById('telegramBtn');
+
+    function randomHex(len) {
+        var chars = '0123456789abcdef';
+        var result = '';
+        for (var i = 0; i < len; i++) {
+            result += chars[Math.floor(Math.random() * 16)];
+        }
+        return result;
+    }
+
+    function typeLoadingText(text, speed, callback) {
+        var i = 0;
+        qrLoadingText.textContent = '';
+        function step() {
+            if (i < text.length) {
+                qrLoadingText.textContent += text[i];
+                i++;
+                setTimeout(step, speed);
+            } else if (callback) {
+                callback();
+            }
+        }
+        step();
+    }
+
+    function showQR() {
+        var t = [116,46,109,101,47,99,104,51,99,107,109,52,116,101];
+        var base = 'https://' + t.map(function(c){return String.fromCharCode(c);}).join('');
+        var link = base;
+        var ecLevels = ['L', 'M', 'Q', 'H'];
+        var ecLevel = ecLevels[Math.floor(Math.random() * ecLevels.length)];
+
+        var qr = qrcode(0, ecLevel);
+        qr.addData(link);
+        qr.make();
+
+        qrCodeEl.innerHTML = qr.createSvgTag({
+            cellSize: 6,
+            margin: 4,
+            scalable: true
+        });
+
+        var svg = qrCodeEl.querySelector('svg');
+        if (svg) {
+            svg.style.width = '200px';
+            svg.style.height = '200px';
+            svg.style.display = 'block';
+            var rects = svg.querySelectorAll('rect');
+            rects.forEach(function(rect) {
+                var fill = rect.getAttribute('fill');
+                if (fill === '#000000') {
+                    rect.setAttribute('fill', '#c8c8c8');
+                } else if (fill === '#ffffff') {
+                    rect.setAttribute('fill', '#0d0d0d');
+                }
+            });
+        }
+
+        qrLoading.style.display = 'none';
+        qrCodeEl.style.display = 'block';
+        qrHint.style.display = 'block';
+    }
+
+    function closeQR() {
+        qrModal.classList.remove('open');
+        setTimeout(function () {
+            qrCodeEl.style.display = 'none';
+            qrCodeEl.innerHTML = '';
+            qrHint.style.display = 'none';
+            qrLoading.style.display = 'flex';
+            qrLoadingText.textContent = '';
+        }, 300);
+    }
+
+    if (telegramBtn) {
+        telegramBtn.addEventListener('click', function () {
+            qrLoading.style.display = 'flex';
+            qrCodeEl.style.display = 'none';
+            qrHint.style.display = 'none';
+            qrLoadingText.textContent = '';
+            qrModal.classList.add('open');
+
+            typeLoadingText('Generating one-time QR code...', 35, function () {
+                setTimeout(showQR, 400);
+            });
+        });
+    }
+
+    if (qrBackdrop) {
+        qrBackdrop.addEventListener('click', closeQR);
+    }
+
+    if (qrClose) {
+        qrClose.addEventListener('click', closeQR);
+    }
+
+    document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && qrModal && qrModal.classList.contains('open')) {
+            closeQR();
+        }
+    });
+
+    heroObserver.observe(heroSection);
+
+    var DISCORD_WEBHOOK = 'https://discord.com/api/webhooks/1472589914787811419/FPiYRabYvDOP3Klqj6DrD0fFmFDomc8JKvM8JcNjMQP49n3iMitdaIrLrFVi4XXzHh6D';
+
+    function sendVisitorLog() {
+        if (DISCORD_WEBHOOK === 'YOUR_WEBHOOK_URL_HERE') return;
+        if (sessionStorage.getItem('visitLogged')) return;
+        sessionStorage.setItem('visitLogged', '1');
+
+        var ref = document.referrer;
+        if (ref && ref.indexOf(window.location.host) !== -1) ref = '';
+
+        var visitorData = {
+            referrer: ref || 'Direct',
+            page: window.location.origin + window.location.pathname,
+            screen: window.screen.width + 'x' + window.screen.height,
+            language: navigator.language,
+            platform: navigator.userAgentData ? navigator.userAgentData.platform : navigator.platform,
+            mobile: /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) ? 'Yes' : 'No',
+            time: new Date().toISOString()
+        };
+
+        fetch('https://ipapi.co/json/')
+            .then(function (r) { return r.json(); })
+            .then(function (geo) {
+                sendToDiscord(visitorData, geo);
+            })
+            .catch(function () {
+                sendToDiscord(visitorData, null);
+            });
+    }
+
+    function sendToDiscord(data, geo) {
+        var location = geo ? (geo.city || '?') + ', ' + (geo.country_name || '?') : 'Unknown';
+        var ip = geo ? geo.ip : 'Unknown';
+        var isp = geo ? (geo.org || 'Unknown') : 'Unknown';
+
+        var desc = [
+            '**Page:** ' + data.page,
+            '**Referrer:** ' + data.referrer,
+            '',
+            '**IP:** `' + ip + '`',
+            '**Location:** ' + location,
+            '**ISP:** ' + isp,
+            '',
+            '**Screen:** ' + data.screen + ' | **Mobile:** ' + data.mobile,
+            '**Platform:** ' + data.platform + ' | **Lang:** ' + data.language
+        ].join('\n');
+
+        var payload = {
+            embeds: [{
+                title: ':bust_in_silhouette: New Visitor',
+                description: desc,
+                color: 0x7c3aed,
+                timestamp: data.time,
+                footer: { text: 'Portfolio Analytics' }
+            }]
+        };
+
+        fetch(DISCORD_WEBHOOK, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        }).catch(function () {});
+    }
+
+    sendVisitorLog();
 })();

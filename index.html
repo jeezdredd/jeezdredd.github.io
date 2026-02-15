@@ -64,10 +64,10 @@
             <span class="hero-typed" id="heroTyped"></span>
             <span class="hero-cursor">|</span>
         </div>
-        <div class="hero-scroll anim-fade" data-delay="800">
-            <div class="hero-scroll-line"></div>
-            <span>scroll</span>
-        </div>
+    </div>
+    <div class="hero-scroll anim-fade" data-delay="800">
+        <div class="hero-scroll-line"></div>
+        <span>scroll</span>
     </div>
 </section>
 
@@ -377,6 +377,10 @@
                     <span class="contact-link-label">Email</span>
                     <span class="contact-link-arrow">&rarr;</span>
                 </a>
+                <button class="contact-link" id="telegramBtn">
+                    <span class="contact-link-label">Telegram</span>
+                    <span class="contact-link-arrow">&rarr;</span>
+                </button>
             </div>
         </div>
     </div>
@@ -391,6 +395,23 @@
     </div>
 </footer>
 
+<div class="qr-modal" id="qrModal">
+    <div class="qr-modal-backdrop" id="qrBackdrop"></div>
+    <div class="qr-modal-content">
+        <div class="qr-modal-header">
+            <span class="qr-modal-title">Telegram</span>
+            <button class="qr-modal-close" id="qrClose">&times;</button>
+        </div>
+        <div class="qr-loading" id="qrLoading">
+            <span class="qr-loading-text" id="qrLoadingText"></span>
+            <span class="loader-caret">&#9608;</span>
+        </div>
+        <div id="qrCode" style="display:none"></div>
+        <div class="qr-modal-hint" id="qrHint" style="display:none">Scan with your camera to open Telegram</div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
 <script src="script.js"></script>
 </body>
 </html>
