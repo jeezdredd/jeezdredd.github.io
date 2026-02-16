@@ -1533,6 +1533,11 @@ button.contact-link {
         display: none;
     }
 
+    .theme-toggle {
+        margin-left: auto;
+        margin-right: 8px;
+    }
+
     .nav-toggle {
         display: flex;
     }
