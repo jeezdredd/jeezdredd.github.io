@@ -525,15 +525,15 @@
             time: new Date().toISOString()
         };
 
-        fetch('https://ipwho.is/')
+        fetch('https://ipinfo.io/json?token=')
             .then(function (r) { return r.json(); })
             .then(function (geo) {
-                if (geo && geo.success && geo.ip) {
+                if (geo && geo.ip) {
                     sendToDiscord(visitorData, {
                         ip: geo.ip,
                         city: geo.city,
                         country_name: geo.country,
-                        org: geo.connection ? geo.connection.isp : 'Unknown',
+                        org: geo.org,
                         mobile: /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)
                     });
                 } else {
