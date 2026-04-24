@@ -525,7 +525,7 @@
             time: new Date().toISOString()
         };
 
-        fetch('https://ip-api.com/json/?fields=query,country,city,isp,mobile')
+        fetch('https://ip-api.com/json/?fields=status,query,country,city,isp,mobile')
             .then(function (r) { return r.json(); })
             .then(function (geo) {
                 if (geo && geo.status === 'success') {
