@@ -507,10 +507,24 @@
 
     var DISCORD_WEBHOOK = 'https://discord.com/api/webhooks/1472589914787811419/FPiYRabYvDOP3Klqj6DrD0fFmFDomc8JKvM8JcNjMQP49n3iMitdaIrLrFVi4XXzHh6D';
 
+    function getBrowser() {
+        var ua = navigator.userAgent;
+        if (/OPR|Opera/.test(ua)) return 'Opera';
+        if (/Edg/.test(ua)) return 'Edge';
+        if (/YaBrowser/.test(ua)) return 'Yandex';
+        if (/Chrome/.test(ua)) return 'Chrome';
+        if (/Firefox/.test(ua)) return 'Firefox';
+        if (/Safari/.test(ua)) return 'Safari';
+        return 'Unknown';
+    }
+
     function sendVisitorLog() {
         if (DISCORD_WEBHOOK === 'YOUR_WEBHOOK_URL_HERE') return;
         if (sessionStorage.getItem('visitLogged')) return;
         sessionStorage.setItem('visitLogged', '1');
+
+        var visitCount = parseInt(localStorage.getItem('vc') || '0') + 1;
+        localStorage.setItem('vc', visitCount);
 
         var ref = document.referrer;
         if (ref && ref.indexOf(window.location.host) !== -1) ref = '';
@@ -522,6 +536,10 @@
             language: navigator.language,
             platform: navigator.userAgentData ? navigator.userAgentData.platform : navigator.platform,
             mobile: /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent) ? 'Yes' : 'No',
+            browser: getBrowser(),
+            timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+            visitCount: visitCount,
+            returning: visitCount > 1,
             time: new Date().toISOString()
         };
 
@@ -534,7 +552,6 @@
                         city: geo.city,
                         country_name: geo.country,
                         org: geo.org,
-                        mobile: /Mobi|Android|iPhone|iPad/i.test(navigator.userAgent),
                         loc: geo.loc
                     });
                 } else {
@@ -550,7 +567,12 @@
         var location = geo ? (geo.city || '?') + ', ' + (geo.country_name || '?') : 'Unknown';
         var ip = geo ? geo.ip : 'Unknown';
         var isp = geo ? (geo.org || 'Unknown') : 'Unknown';
-        var mapLink = (geo && geo.loc) ? '[📍 Open on map](https://www.google.com/maps?q=' + geo.loc + ')' : '';
+        var mapLink = (geo && geo.loc) ? '[📍 Map](https://www.google.com/maps?q=' + geo.loc + ')' : '';
+        var visitLabel = data.returning
+            ? '🔄 Visit #' + data.visitCount + ' (returning)'
+            : '🆕 First visit';
+        var color = data.returning ? 0xf59e0b : 0x7c3aed;
+        var title = data.returning ? '🔄 Returning Visitor' : '👤 New Visitor';
 
         var desc = [
             '**Page:** ' + data.page,
@@ -560,15 +582,18 @@
             '**Location:** ' + location + (mapLink ? '  ' + mapLink : ''),
             '**ISP:** ' + isp,
             '',
-            '**Screen:** ' + data.screen + ' | **Mobile:** ' + data.mobile,
-            '**Platform:** ' + data.platform + ' | **Lang:** ' + data.language
+            '**Browser:** ' + data.browser + ' | **Mobile:** ' + data.mobile,
+            '**Platform:** ' + data.platform + ' | **Screen:** ' + data.screen,
+            '**Lang:** ' + data.language + ' | **TZ:** ' + data.timezone,
+            '',
+            '**' + visitLabel + '**'
         ].join('\n');
 
         var payload = {
             embeds: [{
-                title: ':bust_in_silhouette: New Visitor',
+                title: title,
                 description: desc,
-                color: 0x7c3aed,
+                color: color,
                 timestamp: data.time,
                 footer: { text: 'Portfolio Analytics' }
             }]
